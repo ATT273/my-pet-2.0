@@ -1,14 +1,16 @@
+import { PET_EGGS } from "../constants/pet.constants";
+
 export type PetData = {
   name: string;
   type: string;
-  stats:StatData;
+  stats: StatData;
   level: number;
   sprite: string;
   exp: number;
   nextLvExp: number;
   coins: number;
   evolveLvls: number[];
-}
+};
 
 export type StatData = {
   hunger: number;
@@ -16,16 +18,18 @@ export type StatData = {
   energy: number;
   happiness: number;
   hygiene: number;
-}
+};
 
 export type PetDataResponse = {
-    name: string;
+  name: string;
   type: string;
-  stats:StatData;
+  stats: StatData;
   level: number;
   sprite: string;
   exp: number;
   next_lv_exp: number;
   coins: number;
   evolve_lvls: number[];
-}
+};
+
+export type PetType = keyof typeof PET_EGGS;

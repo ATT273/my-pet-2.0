@@ -1,18 +1,19 @@
+import Button from "@/src/components/ui/Button";
 import { NavLink } from "react-router";
 
 const WelcomePage = () => {
   return (
-    <div className="w-full h-full flex items-center justify-center flex-col bg-neutral-900">
+    <div className="w-full h-full flex items-center justify-center flex-col bg-zinc-100 text-zinc-800">
       <h1 className="text-xl font-bold mb-4">Welcome to Desktop pet</h1>
       <div className="flex flex-col gap-4">
-        <NavLink to="/create-new-pet" end>
-          <button className="w-full">Adopt new pet</button>
+        <NavLink to="/adopt" end>
+          <Button className="w-full">Adopt new pet</Button>
         </NavLink>
         <NavLink to="/about" end>
-          <button className="w-full">About</button>
+          <Button className="w-full">About</Button>
         </NavLink>
         <NavLink to="/about" end>
-          <button className="w-full">Exit</button>
+          <Button className="w-full">Exit</Button>
         </NavLink>
       </div>
     </div>

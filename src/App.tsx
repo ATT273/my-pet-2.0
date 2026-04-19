@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
@@ -14,7 +12,7 @@ const router = createBrowserRouter([
     Component: WelcomePage,
   },
   {
-    path: "/create-new-pet",
+    path: "/adopt",
     Component: CreateNewPetPage,
   },
   {
@@ -28,17 +26,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
-
-  return (
-    <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

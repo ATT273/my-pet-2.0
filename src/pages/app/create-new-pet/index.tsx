@@ -32,12 +32,8 @@ const CreateNewPetPage = () => {
   const handleCreatePet = () => {
     updatePetData(petData);
     setStep(3);
-    // setPetData({
-    //   name: "",
-    //   type: "",
-    // });
   };
-  console.log(petData);
+
   return (
     <div className="flex flex-col items-center justify-center gap-4 h-full p-8">
       {step === 1 && (
@@ -49,7 +45,7 @@ const CreateNewPetPage = () => {
               value={petData.name}
               onChange={(e) => setPetData({ ...petData, name: e.target.value })}
               placeholder="Pet name"
-              className="w-[300px]"
+              className="w-75"
             />
             {error && <p className="text-red-500">{error}</p>}
             <button onClick={handleNextStep}>Agree</button>
@@ -88,11 +84,7 @@ const CreateNewPetPage = () => {
         <>
           <p>This is your pet information.</p>
           <p>Are you sure you want to adopt this pet?</p>
-          <div
-            className={`size-20 ${
-              petColors[petStoreData.type as keyof typeof petColors]
-            }`}
-          ></div>
+          <div className={`size-20 ${petColors[petStoreData.type as keyof typeof petColors]}`}></div>
           <p>
             Pet info: {petStoreData.name} / {petStoreData.type}
           </p>

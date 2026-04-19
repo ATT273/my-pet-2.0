@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { MAX_STAT_VALUE, MIN_STAT_VALUE, STAT_ICONS } from "../../../../constants/pet.constants";
+import { MAX_STAT_VALUE, STAT_ICONS } from "../../../../constants/pet.constants";
 import { usePetStore } from "../../../../stores/pet-data-store";
 import { PetData, PetDataResponse, StatData } from "../../../../types/pet.types";
 import { invoke } from "@tauri-apps/api/core";
@@ -12,18 +12,16 @@ const StatInfo = () => {
     const intervalId = setInterval(async () => {
       const newPetData = { ...petData, next_lv_exp: petData.nextLvExp };
       const newData: PetDataResponse = await invoke("tick_pet_stats", { petData: newPetData });
-      console.log("newData",newData)
-      const formatedData = {
+
+      const formattedData = {
         ...newData,
         nextLvExp: newData.next_lv_exp,
-        evolveLvls: petData.evolveLvls
-      }
-      updatePetData(formatedData as PetData);
-
+        evolveLvls: petData.evolveLvls,
+      };
+      updatePetData(formattedData as PetData);
     }, 1000);
     return () => clearInterval(intervalId);
   }, [petData]);
-
 
   return (
     <div className="max-w-30">

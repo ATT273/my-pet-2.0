@@ -13,4 +13,10 @@ export const STAT_ICONS = {
   energy: "🔋",
   happiness: "😁",
   hygiene: "🚿",
-}
+};
+
+export const PET_EGGS = {
+  fire: "/pets/fire_egg.png",
+  water: "/pets/water_egg.png",
+  grass: "/pets/grass_egg.png",
+};

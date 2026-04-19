@@ -1,20 +1,21 @@
 import { useEffect, useMemo } from "react";
-import { petColors } from "../../../../constants/pet.constants";
+import { PET_EGGS } from "../../../../constants/pet.constants";
 import { usePetStore } from "../../../../stores/pet-data-store";
+import { PetType } from "@/src/types/pet.types";
 
 const evolveSize = {
-  5: "size-20",
-  10: "size-24",
-  15: "size-28",   
-}
+  5: 80,
+  10: 96,
+  15: 112,
+};
 const Pet = () => {
   const petData = usePetStore((state) => state.petData);
   const petSize = useMemo(() => {
-    let  size = "size-10";
+    let size = 40;
     const evolveSizeKeys = Object.keys(evolveSize);
     const evolveSizeKeysNumber = evolveSizeKeys.map((key) => Number(key));
     evolveSizeKeysNumber.forEach((key) => {
-      if(petData.level >= key) {
+      if (petData.level >= key) {
         size = evolveSize[key as keyof typeof evolveSize];
       }
     });
@@ -27,10 +28,17 @@ const Pet = () => {
       alert("Your pet has evolved!");
     }
   }, [petData.level]);
-  console.log(petSize);
+
   return (
     <div
-      className={`${petSize} ${petColors[petData.type as keyof typeof petColors]}`}
+      style={{
+        width: petSize,
+        height: petSize,
+        backgroundImage: `url(${PET_EGGS[petData.type as PetType]})`,
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
     />
   );
 };
