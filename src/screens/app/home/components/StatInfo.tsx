@@ -10,9 +10,8 @@ const StatInfo = () => {
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
-      const newPetData = { ...petData, next_lv_exp: petData.nextLvExp };
+      const newPetData = { ...petData, next_lv_exp: petData.nextLvExp, pet_state: petData.petState };
       const newData: PetDataResponse = await invoke("tick_pet_stats", { petData: newPetData });
-
       const formattedData = {
         ...newData,
         nextLvExp: newData.next_lv_exp,

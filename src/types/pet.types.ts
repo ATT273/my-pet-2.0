@@ -10,6 +10,7 @@ export type PetData = {
   nextLvExp: number;
   coins: number;
   evolveLvls: number[];
+  petState: PetState;
 };
 
 export type StatData = {
@@ -30,6 +31,8 @@ export type PetDataResponse = {
   next_lv_exp: number;
   coins: number;
   evolve_lvls: number[];
+  petState: PetState;
 };
 
 export type PetType = keyof typeof PET_EGGS;
+export type PetState = "awake" | "sleep" | "work";
