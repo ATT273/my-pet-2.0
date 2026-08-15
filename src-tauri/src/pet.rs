@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 const MIN_STAT_VALUE: i32 = 0;
+const MAX_STAT_VALUE: i32 = 100;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StatData {
@@ -19,18 +20,47 @@ pub struct PetData {
     pub coins: i32,
     pub level: i32,
     pub next_lv_exp: i32,
+    #[serde(rename = "petState")]
+    pub pet_state: PetState,
 }
 
-
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum PetState {
+    #[serde(rename = "awake")]
+    Awake,
+    #[serde(rename = "sleep")]
+    Sleep,
+    #[serde(rename = "work")]
+    Work,
+}
 #[tauri::command]
 pub fn tick_pet_stats(mut pet_data: PetData) -> PetData {
+    // println!("tick_pet_stats received: {:#?}", pet_data);
     // Decay tất cả stats
     let stats = &mut pet_data.stats;
-    stats.hunger = (stats.hunger - 1).max(MIN_STAT_VALUE);
-    stats.happiness = (stats.happiness - 1).max(MIN_STAT_VALUE);
-    stats.energy = (stats.energy - 1).max(MIN_STAT_VALUE);
-    stats.thirst = (stats.thirst - 1).max(MIN_STAT_VALUE);
-    stats.hygiene = (stats.hygiene - 1).max(MIN_STAT_VALUE);
+    match pet_data.pet_state {
+        PetState::Awake => {
+            stats.hunger = (stats.hunger - 2).max(MIN_STAT_VALUE);
+            stats.happiness = (stats.happiness - 2).max(MIN_STAT_VALUE);
+            stats.energy = (stats.energy - 2).max(MIN_STAT_VALUE);
+            stats.thirst = (stats.thirst - 2).max(MIN_STAT_VALUE);
+            stats.hygiene = (stats.hygiene - 2).max(MIN_STAT_VALUE);
+        }
+        PetState::Work => {
+            stats.hunger = (stats.hunger - 5).max(MIN_STAT_VALUE);
+            stats.happiness = (stats.happiness - 5).max(MIN_STAT_VALUE);
+            stats.energy = (stats.energy - 5).max(MIN_STAT_VALUE);
+            stats.thirst = (stats.thirst - 5).max(MIN_STAT_VALUE);
+            stats.hygiene = (stats.hygiene - 5).max(MIN_STAT_VALUE);
+        }
+        PetState::Sleep => {
+            stats.hunger = (stats.hunger - 1).max(MIN_STAT_VALUE);
+            stats.happiness = (stats.happiness - 1).max(MIN_STAT_VALUE);
+            stats.energy = (stats.energy + 5).min(MAX_STAT_VALUE);
+            stats.thirst = (stats.thirst - 1).max(MIN_STAT_VALUE);
+            stats.hygiene = (stats.hygiene - 1).max(MIN_STAT_VALUE);
+        }
+    }
 
     // Tăng exp và coins
     pet_data.exp += 50;

@@ -1,5 +1,4 @@
 import { usePetStore } from "../../../stores/pet-data-store";
-import { petColors } from "../../../constants/pet.constants";
 import { NavLink } from "react-router";
 import Menu from "./components/Menu";
 import LevelInfo from "./components/LevelInfo";
@@ -8,9 +7,11 @@ import { useEffect, useState } from "react";
 import Pet from "./components/Pet";
 import { BG_IMAGE_URL } from "../../../constants/bg.constants";
 import Button from "@/src/components/ui/Button";
+import { PetState } from "@/src/types/pet.types";
 
 const HomeScreen = () => {
   const petData = usePetStore((state) => state.petData);
+  const updatePetData = usePetStore((state) => state.updatePetData);
   const [alerts, setAlerts] = useState<string[]>([]);
   const [showBG, setShowBg] = useState<boolean>(true);
 
@@ -28,6 +29,11 @@ const HomeScreen = () => {
     });
   }, [petData]);
 
+  const gotoWork = () => {
+    const petState: PetState = petData.petState === "work" ? "awake" : "work";
+    const newData = { ...petData, petState };
+    updatePetData(newData);
+  };
   return (
     <div
       className={`relative size-full bg-cover bg-center`}
@@ -46,6 +52,9 @@ const HomeScreen = () => {
                   onClick={() => setShowBg(!showBG)}
                 >
                   {showBG ? "Hide Bg" : "Show Bg"}
+                </Button>
+                <Button className="cursor-pointer p-1 border border-zinc-600 rounded-md" onClick={gotoWork}>
+                  {petData.petState === "work" ? "Stop working" : "Go to work"}
                 </Button>
               </div>
               <Menu />

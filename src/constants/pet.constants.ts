@@ -20,3 +20,8 @@ export const PET_EGGS = {
   water: "/pets/water_egg.png",
   grass: "/pets/grass_egg.png",
 };
+export const PET_STATES = {
+  SLEEP: "sleep",
+  AWAKE: "awake",
+  WORK: "work",
+} as const;
